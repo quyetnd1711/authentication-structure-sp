@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: authentication-structure-sp
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    url:  jdbc:postgresql://${URL_DB:localhost}:${PORT_DB:5432}/${NAME_DB:sp}
+    username: ${USER_DB:java}
+    password: ${PASSWORD_DB:123}
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate.jdbc.time_zone: UTC
+      hibernate.connection.provider_disables_autocommit: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      # modify batch size as necessary
+      hibernate.jdbc.batch_size: 25
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+      hibernate.query.fail_on_pagination_over_collection_fetch: true
+      hibernate.query.in_clause_parameter_padding: true
+
+  profiles:
+    active: ${PROFILE:123456}
+
+server:
+  port: ${PORT_APP:1711}
+  servlet:
+    session:
+      cookie:
+        http-only: true
+
+api:
+  endpoint: ${API_ENDPOINT:/api/v1/}
+
+security:
+  issuer: ${ISSUER:quyetnd}
+  signer-key: ${SIGNER_KEY:6EYyOxr/njVMHt/bpAvTjkzLYH6TVmqCh9WdYTi80jc3Lrk}
+  expiration-token-time: ${ISSUER:1200}
+  refresh-token-time:  ${REFRESH_TOKEN_TIME:2400}
+

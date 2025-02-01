@@ -1,0 +1,10 @@
+name: authentication-structure-sp
+services:
+  postgres:
+    extends:
+      file: ./postgresql.yml
+      service: postgres
+  redis:
+    extends:
+      file: ./redis.yml
+      service: redis
