@@ -7,12 +7,10 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.Instant;
 
 @MappedSuperclass
@@ -20,21 +18,20 @@ import java.time.Instant;
 @Setter
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createDate", "createUid", "writeDate", "writeId"}, allowGetters = true)
-public abstract class AbstractAuditingEntity<Long> {
+public abstract class AbstractAuditingEntity<ID> implements Serializable {
 
-    @CreatedDate
-    @Column(name = "create_date")
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @Column(name = "create_date", nullable = false)
     Instant createDate;
 
-    @CreatedBy
-    @Column(name = "create_uid")
-    Long createUid;
+    @Column(name = "create_uid", nullable = false, length = 36)
+    ID createUid;
 
-    @LastModifiedDate
-    @Column(name = "write_date")
+    @Column(name = "write_date", nullable = false)
     Instant writeDate;
 
-    @LastModifiedBy
-    @Column(name = "write_uid")
-    Long writeUid;
+    @Column(name = "write_uid", nullable = false, length = 36)
+    ID writeUid;
 }
