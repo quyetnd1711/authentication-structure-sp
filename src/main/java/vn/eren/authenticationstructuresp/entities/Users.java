@@ -1,9 +1,6 @@
 package vn.eren.authenticationstructuresp.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,12 +8,16 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.UuidGenerator;
 import vn.eren.authenticationstructuresp.config.audit.AbstractAuditingEntity;
 
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
-@Table(name = "account", schema = "public")
+@Table(name = "users", schema = "sp")
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Account extends AbstractAuditingEntity<String> {
+public class Users extends AbstractAuditingEntity<String> {
 
     @Id
     @UuidGenerator
@@ -41,4 +42,20 @@ public class Account extends AbstractAuditingEntity<String> {
     @Column(name = "is_otp", length = 1)
     String isOtp;
 
+    @Column(name = "is_admin")
+    Boolean isAdmin;
+
+    @Column(name = "is_locked", length = 1)
+    String isLocked;
+
+    @Column(name = "time_locked_end")
+    Instant timeLockedEnd;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Roles> roles = new HashSet<>();
 }

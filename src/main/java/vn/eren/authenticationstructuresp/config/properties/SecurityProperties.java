@@ -1,4 +1,4 @@
-package vn.eren.authenticationstructuresp.config.app;
+package vn.eren.authenticationstructuresp.config.properties;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,12 +8,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+
+@Configuration
 @Getter
 @Setter
-@Configuration
-@ConfigurationProperties(prefix = "app")
+@ConfigurationProperties(
+        prefix = "security",
+        ignoreUnknownFields = false
+)
 @FieldDefaults(level = AccessLevel.PROTECTED)
-public class AppConfigProperties {
+public class SecurityProperties {
 
     @Value("${security.signer-key}")
     String signerKey;
@@ -23,9 +27,6 @@ public class AppConfigProperties {
 
     @Value("${security.expiration-token-time}")
     Long expTokenTime;
-
-    @Value("${api.endpoint}")
-    String apiEndpoint;
 
     @Value("${security.refresh-token-time}")
     Long refreshTokenTime;

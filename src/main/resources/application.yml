@@ -50,7 +50,17 @@ api:
 
 security:
   issuer: ${ISSUER:quyetnd}
-  signer-key: ${SIGNER_KEY:6EYyOxr/njVMHt/bpAvTjkzLYH6TVmqCh9WdYTi80jc3Lrk}
+  signer-key: ${SIGNER_KEY:6EYyOxr}
   expiration-token-time: ${ISSUER:1200}
   refresh-token-time:  ${REFRESH_TOKEN_TIME:2400}
 
+cache:
+  redis:
+    expiration: ${REDIS_EXP:3600}
+    server: ${REDIS_SERVER:redis://localhost:6379}
+    cluster: ${REDIS_IS_CLUSTER:false}
+    connection-pool-size: ${REDIS_CON_POOL_SIZE:64}
+    connection-minimum-idle-size: ${REDIS_CON_MINI_IDLE_SIZE:24}
+    subscription-connection-pool-size: ${REDIS_SUB_CON_POOL_SIZE:50}
+    subscription-connection-minimum-idle-size: ${REDIS_SUB_CON_MINI_IDLE_SIZE:1}
+    # server: redis://localhost:6379,redis://localhost:16379,redis://localhost:26379
