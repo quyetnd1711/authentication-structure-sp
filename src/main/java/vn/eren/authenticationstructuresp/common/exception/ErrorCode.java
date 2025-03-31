@@ -11,9 +11,10 @@ import org.springframework.http.HttpStatus;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum ErrorCode{
     // INTERNAL_SERVER_ERROR
-    INVALID_KEY(9999, "Invalid value", HttpStatus.BAD_REQUEST),
+    INVALID_KEY(9999, "Invalid value", HttpStatus.INTERNAL_SERVER_ERROR),
     // BAD_REQUEST - 400
-    BAD_REQUEST(9998, "Unknown error", HttpStatus.INTERNAL_SERVER_ERROR),
+    BAD_REQUEST(9998, "Unknown error", HttpStatus.BAD_REQUEST),
+    INVALID_SEARCH(10002, "Invalid search", HttpStatus.BAD_REQUEST),
     // FORBIDDEN - 403
     UNAUTHORIZED(10000, "Unauthorized", HttpStatus.UNAUTHORIZED),
     UNAUTHENTICATED(10001, "Unauthenticated", HttpStatus.UNAUTHORIZED),

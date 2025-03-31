@@ -30,6 +30,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.internalServerError().body(apiResponse);
     }
 
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    ResponseEntity<ApiResponse<?>> handlingIllegalArgumentException(Exception ex) {
+        ApiResponse<Object> apiResponse = new ApiResponse<>();
+        apiResponse.setHttpStatus(ErrorCode.INVALID_SEARCH.getStatusCode().value());
+        apiResponse.setCode(ErrorCode.INVALID_SEARCH.getCode());
+        apiResponse.setMessage(ErrorCode.INVALID_SEARCH.getMessage());
+        logger.error("=============> IllegalArgumentException: {}", ex.getMessage());
+        return ResponseEntity.internalServerError().body(apiResponse);
+    }
+
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     ResponseEntity<ApiResponse<?>> handlingMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         ApiResponse<Object> apiResponse = new ApiResponse<>();

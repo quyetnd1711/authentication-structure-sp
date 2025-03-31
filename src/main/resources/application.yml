@@ -38,15 +38,14 @@ spring:
   profiles:
     active: ${PROFILE:123456}
 
+
 server:
   port: ${PORT_APP:1711}
   servlet:
     session:
       cookie:
         http-only: true
-
-api:
-  endpoint: ${API_ENDPOINT:/api/v1/}
+    context-path: ${API_ENDPOINT:/api/v1/}
 
 security:
   issuer: ${ISSUER:quyetnd}

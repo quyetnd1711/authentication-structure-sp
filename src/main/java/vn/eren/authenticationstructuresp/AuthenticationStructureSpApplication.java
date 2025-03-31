@@ -8,7 +8,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
-import vn.eren.authenticationstructuresp.config.properties.ApiProperties;
 import vn.eren.authenticationstructuresp.config.properties.CacheProperties;
 import vn.eren.authenticationstructuresp.config.properties.SecurityProperties;
 
@@ -18,7 +17,7 @@ import java.net.UnknownHostException;
 
 
 @SpringBootApplication
-@EnableConfigurationProperties({SecurityProperties.class, CacheProperties.class, ApiProperties.class})
+@EnableConfigurationProperties({SecurityProperties.class, CacheProperties.class})
 public class AuthenticationStructureSpApplication {
 
     private static final Logger log = LoggerFactory.getLogger(AuthenticationStructureSpApplication.class);
