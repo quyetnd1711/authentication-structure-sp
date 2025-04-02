@@ -1,9 +1,9 @@
 package vn.eren.authenticationstructuresp.config.redis;
 
-import lombok.RequiredArgsConstructor;
 import org.redisson.Redisson;
 import org.redisson.config.Config;
 import org.redisson.jcache.configuration.RedissonConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.boot.info.GitProperties;
@@ -23,14 +23,19 @@ import static vn.eren.authenticationstructuresp.repository.UsersRepository.USER_
 
 @Configuration
 @EnableCaching
-@RequiredArgsConstructor
 public class CacheConfiguration {
 
+    @Autowired(required = false)
     GitProperties gitProperties;
 
+    @Autowired(required = false)
     BuildProperties buildProperties;
 
-    CacheProperties cacheProperties;
+    private final CacheProperties cacheProperties;
+
+    public CacheConfiguration(CacheProperties cacheProperties) {
+        this.cacheProperties = cacheProperties;
+    }
 
     @Bean
     public javax.cache.configuration.Configuration<Object, Object> jcacheConfiguration() {
@@ -46,7 +51,7 @@ public class CacheConfiguration {
                     .setSubscriptionConnectionPoolSize(cacheProperties.getSubscriptionConnectionPoolSize())
                     .setSubscriptionConnectionMinimumIdleSize(cacheProperties.getSubscriptionConnectionMinimumIdleSize())
                     .setRetryAttempts(3)
-                    .addNodeAddress(cacheProperties.getServer());
+                    .addNodeAddress(cacheProperties.getServer()[0]);
             if (redisUri.getUserInfo() != null) {
                 clusterServersConfig.setPassword(redisUri.getUserInfo().substring(redisUri.getUserInfo().indexOf(':') + 1));
             }

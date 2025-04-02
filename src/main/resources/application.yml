@@ -50,7 +50,7 @@ server:
 security:
   issuer: ${ISSUER:quyetnd}
   signer-key: ${SIGNER_KEY:6EYyOxr}
-  expiration-token-time: ${ISSUER:1200}
+  expiration-token-time: ${EXP_TOKEN_TIME:1200}
   refresh-token-time:  ${REFRESH_TOKEN_TIME:2400}
 
 cache:
