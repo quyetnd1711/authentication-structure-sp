@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 import vn.eren.authenticationstructuresp.config.audit.AbstractAuditingEntity;
 
 @Entity
-@Table(name = "roles", schema = "sp")
+@Table(name = "permissions", schema = "sp")
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -24,5 +24,8 @@ public class Permissions extends AbstractAuditingEntity<String> {
 
     @Column(name = "description", length = 200)
     String description;
+
+    @Column(name = "sequence")
+    Integer sequence;
 
 }

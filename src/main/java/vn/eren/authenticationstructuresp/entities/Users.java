@@ -1,9 +1,7 @@
 package vn.eren.authenticationstructuresp.entities;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.UuidGenerator;
 import vn.eren.authenticationstructuresp.config.audit.AbstractAuditingEntity;
@@ -16,6 +14,8 @@ import java.util.Set;
 @Table(name = "users", schema = "sp")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Users extends AbstractAuditingEntity<String> {
 

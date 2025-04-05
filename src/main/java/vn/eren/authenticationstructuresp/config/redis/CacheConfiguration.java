@@ -19,7 +19,9 @@ import javax.cache.expiry.Duration;
 import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
-import static vn.eren.authenticationstructuresp.repository.UsersRepository.USER_BY_USERNAME_CACHE;
+import static vn.eren.authenticationstructuresp.repository.PermissionsRepository.PERMISSION_BY_ID_CACHE;
+import static vn.eren.authenticationstructuresp.repository.PermissionsRepository.PERMISSION_BY_NAME_CACHE;
+import static vn.eren.authenticationstructuresp.repository.UsersRepository.*;
 
 @Configuration
 @EnableCaching
@@ -78,7 +80,13 @@ public class CacheConfiguration {
 
     @Bean
     public JCacheManagerCustomizer cacheManagerCustomizer(javax.cache.configuration.Configuration<Object, Object> jcacheConfiguration) {
-        return cm -> createCache(cm, USER_BY_USERNAME_CACHE, jcacheConfiguration);
+        return cm -> {
+            createCache(cm, USER_BY_USERNAME_CACHE, jcacheConfiguration);
+            createCache(cm, USER_BY_ID_CACHE, jcacheConfiguration);
+            createCache(cm, USER_NAME_BY_ID_CACHE, jcacheConfiguration);
+            createCache(cm, PERMISSION_BY_ID_CACHE, jcacheConfiguration);
+            createCache(cm, PERMISSION_BY_NAME_CACHE, jcacheConfiguration);
+        };
     }
 
     private void createCache(

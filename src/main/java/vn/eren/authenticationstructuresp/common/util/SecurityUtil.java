@@ -11,8 +11,8 @@ public class SecurityUtil {
 //        return null;
 //    }
 
-    public static Long getCurrentAccountId() {
+    public static String getCurrentAccountId() {
 //        return Long.parseLong(Objects.requireNonNull(getClaimByKey("account_id")));
-        return 1L;
+        return "663f343b-3eaa-4eba-aed8-6a03ea1f5613";
     }
 }

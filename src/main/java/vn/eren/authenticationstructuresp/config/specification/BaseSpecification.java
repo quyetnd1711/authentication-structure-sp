@@ -30,7 +30,7 @@ public abstract class BaseSpecification<T> {
      * @param dateFormat Date format for Date/Instant fields
      * @return this BaseSpecification instance (to support method chaining)
      */
-    public BaseSpecification<T> with(String fieldName, String operation, T value, T additionalValue, String dateFormat) {
+    public BaseSpecification<T> with(String fieldName, String operation, Object value, Object additionalValue, String dateFormat) {
         if (fieldName == null || operation == null) {
             return this;
         }

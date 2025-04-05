@@ -20,7 +20,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     database: postgresql
-    show-sql: false
+    show-sql: true
     open-in-view: false
     properties:
       hibernate.jdbc.time_zone: UTC
@@ -45,7 +45,7 @@ server:
     session:
       cookie:
         http-only: true
-    context-path: ${API_ENDPOINT:/api/v1/}
+    context-path: ${API_ENDPOINT:/api/v1}
 
 security:
   issuer: ${ISSUER:quyetnd}
