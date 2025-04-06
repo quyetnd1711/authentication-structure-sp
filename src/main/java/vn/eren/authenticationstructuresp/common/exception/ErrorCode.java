@@ -12,6 +12,10 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode{
     // INTERNAL_SERVER_ERROR
     INVALID_KEY(9999, "Invalid value", HttpStatus.INTERNAL_SERVER_ERROR),
+    // TOO_MANY_REQUESTS
+    TOO_MANY_REQUESTS(9997, "Rate limit exceeded", HttpStatus.TOO_MANY_REQUESTS),
+    // SERVICE_UNAVAILABLE
+    SERVICE_UNAVAILABLE(9996, "Service unavailable due to circuit breaker", HttpStatus.SERVICE_UNAVAILABLE),
     // BAD_REQUEST - 400
     BAD_REQUEST(9998, "Unknown error", HttpStatus.BAD_REQUEST),
     INVALID_SEARCH(10002, "Invalid search", HttpStatus.BAD_REQUEST),

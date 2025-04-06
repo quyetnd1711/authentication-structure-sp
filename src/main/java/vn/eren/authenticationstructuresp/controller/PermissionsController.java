@@ -1,5 +1,7 @@
 package vn.eren.authenticationstructuresp.controller;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +19,14 @@ import vn.eren.authenticationstructuresp.service.PermissionsService;
 @RequiredArgsConstructor
 @RequestMapping(value = "/permissions")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class PermissionsController {
+public class PermissionsController extends BaseController {
 
     PermissionsService permissionsService;
 
+    @RateLimiter(name = "getListPermissionsRateLimit", fallbackMethod = "rateLimitFallback")
+    @CircuitBreaker(name = "getListPermissionsCircuitBreaker", fallbackMethod = "circuitBreakerFallback")
     @PostMapping("/get-list-permissions")
-    public ApiResponse<PagingResponse<PermissionResponse>> getListUsers(@RequestBody SearchPermissionsRequest request) {
+    public ApiResponse<PagingResponse<PermissionResponse>> getListPermissions(@RequestBody SearchPermissionsRequest request) {
         return ApiResponse.<PagingResponse<PermissionResponse>>builder()
                 .httpStatus(HttpStatus.OK.value())
                 .data(permissionsService.getListPermission(request))
@@ -30,7 +34,7 @@ public class PermissionsController {
     }
 
     @GetMapping("/get-one-permissions-by-id")
-    public ApiResponse<PermissionResponse> getOneUserById(@RequestParam Long id) {
+    public ApiResponse<PermissionResponse> getOnePermissionsById(@RequestParam Long id) {
         return ApiResponse.<PermissionResponse>builder()
                 .httpStatus(HttpStatus.OK.value())
                 .data(permissionsService.getOnePermission(id))
@@ -38,7 +42,7 @@ public class PermissionsController {
     }
 
     @PostMapping("/create-permissions")
-    public ApiResponse<PermissionResponse> createUsers(@Valid @RequestBody PermissionRequest request) {
+    public ApiResponse<PermissionResponse> createPermissions(@Valid @RequestBody PermissionRequest request) {
         return ApiResponse.<PermissionResponse>builder()
                 .httpStatus(HttpStatus.OK.value())
                 .data(permissionsService.createPermission(request))
@@ -46,7 +50,7 @@ public class PermissionsController {
     }
 
     @PostMapping("/update-permissions")
-    public ApiResponse<PermissionResponse> updateUsers(@Valid @RequestBody PermissionRequest request) {
+    public ApiResponse<PermissionResponse> updatePermissions(@Valid @RequestBody PermissionRequest request) {
         return ApiResponse.<PermissionResponse>builder()
                 .httpStatus(HttpStatus.OK.value())
                 .data(permissionsService.updatePermission(request))
@@ -54,7 +58,7 @@ public class PermissionsController {
     }
 
     @PostMapping("/delete-permissions")
-    public ApiResponse<PermissionResponse> deleteUsers(@RequestBody Long id) {
+    public ApiResponse<PermissionResponse> deletePermissions(@RequestBody Long id) {
         return ApiResponse.<PermissionResponse>builder()
                 .httpStatus(HttpStatus.OK.value())
                 .data(permissionsService.deletePermission(id))

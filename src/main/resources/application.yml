@@ -17,6 +17,9 @@ spring:
       poolName: Hikari
       auto-commit: false
 
+  config:
+    import: "classpath:resilience4j.yml"
+
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     database: postgresql
@@ -63,3 +66,12 @@ cache:
     subscription-connection-pool-size: ${REDIS_SUB_CON_POOL_SIZE:50}
     subscription-connection-minimum-idle-size: ${REDIS_SUB_CON_MINI_IDLE_SIZE:1}
     # server: redis://localhost:6379,redis://localhost:16379,redis://localhost:26379
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

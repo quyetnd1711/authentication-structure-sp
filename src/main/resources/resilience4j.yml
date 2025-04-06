@@ -1,0 +1,16 @@
+resilience4j:
+  ratelimiter:
+    instances:
+      getListPermissionsRateLimit:
+        limitForPeriod: 5          # Maximum 5 requests
+        limitRefreshPeriod: 1m    # For 1 minute
+        timeoutDuration: 0       # Wait 10 seconds when the limit is exceeded
+  circuitbreaker:
+    instances:
+      getListPermissionsCircuitBreaker:
+        slidingWindowSize: 5             # Track the last 10 requests
+        failureRateThreshold: 50           # If error > 50%, interrupt
+        waitDurationInOpenState: 10s       # Open circuit for 10 seconds
+        permittedNumberOfCallsInHalfOpenState: 2
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+
