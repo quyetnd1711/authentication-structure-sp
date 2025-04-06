@@ -69,12 +69,22 @@ public class PermissionsServiceImpl implements PermissionsService{
 
     @Override
     public PermissionResponse updatePermission(PermissionRequest request) {
-        return null;
+        Permissions permission = permissionsRepository.getOneById(request.getId());
+        if (permission == null) {
+            throw new AppException(ErrorCode.NOT_EXIST_PERMISSION);
+        }
+        permissionsMapper.update(permission, request);
+        return convertToPermission(permissionsRepository.save(permission));
     }
 
     @Override
     public PermissionResponse deletePermission(Long id) {
-        return null;
+        Permissions permission = permissionsRepository.getOneById(id);
+        if (permission == null) {
+            throw new AppException(ErrorCode.NOT_EXIST_PERMISSION);
+        }
+        permissionsRepository.delete(permission);
+        return convertToPermission(permission);
     }
 
     private PermissionResponse convertToPermission(Permissions permissions) {

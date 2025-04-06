@@ -6,6 +6,7 @@ services:
       POSTGRES_USER: ${USER_DB:-java}
       POSTGRES_PASSWORD: ${USER_PASSWORD:-java}
       POSTGRES_DB: ${NAME_DB:-authentication-sp}
+      TZ: ${TIME_ZONE_DB:-Asia/Ho_Chi_Minh}
     volumes:
       - ./postgres_data:/data/postgres
     ports:

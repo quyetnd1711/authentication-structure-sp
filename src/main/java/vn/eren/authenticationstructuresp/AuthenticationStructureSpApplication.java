@@ -11,7 +11,6 @@ import org.springframework.core.env.Environment;
 import vn.eren.authenticationstructuresp.config.properties.CacheProperties;
 import vn.eren.authenticationstructuresp.config.properties.SecurityProperties;
 
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
