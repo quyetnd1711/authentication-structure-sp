@@ -25,6 +25,9 @@ public enum ErrorCode{
     USER_NOT_EXISTED(10006, "User does not exist", HttpStatus.BAD_REQUEST),
     NOT_EXIST_PERMISSION(10007, "Permission does not exist", HttpStatus.BAD_REQUEST),
     PERMISSION_EXISTED(10008, "Permission already exists", HttpStatus.BAD_REQUEST),
+    NOT_EXIST_ROLE(10009, "Role does not exist", HttpStatus.BAD_REQUEST),
+    ROLE_EXISTED(10010, "Role already exists", HttpStatus.BAD_REQUEST),
+    NOT_DELETE_ROLE_ADMIN(10011, "Do not delete role ADMIN", HttpStatus.BAD_REQUEST),
     // FORBIDDEN - 403
     UNAUTHORIZED(10000, "Unauthorized", HttpStatus.UNAUTHORIZED),
     UNAUTHENTICATED(10001, "Unauthenticated", HttpStatus.UNAUTHORIZED),

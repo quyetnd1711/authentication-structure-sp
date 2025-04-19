@@ -19,9 +19,7 @@ import javax.cache.expiry.Duration;
 import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
-import static vn.eren.authenticationstructuresp.repository.PermissionsRepository.PERMISSION_BY_ID_CACHE;
-import static vn.eren.authenticationstructuresp.repository.PermissionsRepository.PERMISSION_BY_NAME_CACHE;
-import static vn.eren.authenticationstructuresp.repository.UsersRepository.*;
+import static vn.eren.authenticationstructuresp.common.constant.CacheConstant.*;
 
 @Configuration
 @EnableCaching
@@ -86,6 +84,7 @@ public class CacheConfiguration {
             createCache(cm, USER_NAME_BY_ID_CACHE, jcacheConfiguration);
             createCache(cm, PERMISSION_BY_ID_CACHE, jcacheConfiguration);
             createCache(cm, PERMISSION_BY_NAME_CACHE, jcacheConfiguration);
+            createCache(cm, ROLE_BY_ID_CACHE, jcacheConfiguration);
         };
     }
 

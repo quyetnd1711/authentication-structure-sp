@@ -33,17 +33,17 @@ public class PermissionsServiceImpl implements PermissionsService{
 
     @Override
     public PagingResponse<PermissionResponse> getListPermission(SearchPermissionsRequest request) {
-        Page<PermissionResponse> pageUsers = permissionsRepository.findAll(request.specification(), request.getPaging().pageable())
+        Page<PermissionResponse> pagePermission = permissionsRepository.findAll(request.specification(), request.getPaging().pageable())
                 .map(this::convertToPermission);
         PagingRequest paging = request.getPaging();
         return new PagingResponse<PermissionResponse>()
-                .setContents(pageUsers.getContent())
+                .setContents(pagePermission.getContent())
                 .setPaging(
                         new PageableData()
                                 .setPageNumber(paging.getPage() - 1)
-                                .setTotalPage(pageUsers.getTotalPages())
+                                .setTotalPage(pagePermission.getTotalPages())
                                 .setPageSize(paging.getSize())
-                                .setTotalRecord(pageUsers.getTotalElements())
+                                .setTotalRecord(pagePermission.getTotalElements())
                 );
     }
 

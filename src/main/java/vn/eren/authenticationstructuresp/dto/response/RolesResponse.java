@@ -12,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RolesResponse {
+public class RolesResponse extends BaseResponse{
 
     Long id;
 

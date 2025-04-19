@@ -9,14 +9,14 @@ import vn.eren.authenticationstructuresp.entities.Users;
 
 import java.util.Optional;
 
+import static vn.eren.authenticationstructuresp.common.constant.CacheConstant.USER_BY_ID_CACHE;
+import static vn.eren.authenticationstructuresp.common.constant.CacheConstant.USER_BY_USERNAME_CACHE;
+import static vn.eren.authenticationstructuresp.common.constant.CacheConstant.USER_NAME_BY_ID_CACHE;
+
 @Repository
 public interface UsersRepository extends JpaRepository<Users, String>, JpaSpecificationExecutor<Users> {
 
-    String USER_BY_USERNAME_CACHE = "userByUsername";
 
-    String USER_BY_ID_CACHE = "userById";
-
-    String USER_NAME_BY_ID_CACHE = "usernameById";
 
     @Cacheable(cacheNames = USER_BY_USERNAME_CACHE, unless = "#result == null")
     Optional<Users> findByUsername(String username);

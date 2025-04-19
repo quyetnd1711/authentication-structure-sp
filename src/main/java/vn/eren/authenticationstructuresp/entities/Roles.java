@@ -31,8 +31,12 @@ public class Roles extends AbstractAuditingEntity<String> {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_permissions",
+            schema = "sp",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id")
     )
     private Set<Permissions> permissions = new HashSet<>();
+
+    @Column(name = "is_role_admin")
+    Boolean isRoleAdmin;
 }
