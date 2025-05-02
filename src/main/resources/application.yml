@@ -45,6 +45,7 @@ spring:
     job-store-type: jdbc
     scheduler-name: MainQuartzScheduler
     wait-for-jobs-to-complete-on-shutdown: true
+    overwrite-existing-jobs: true
     jdbc:
       initialize-schema: never
     properties:
@@ -54,7 +55,6 @@ spring:
       org.quartz.jobStore.isClustered: false
       org.quartz.jobStore.tablePrefix: sp.QRTZ_
       org.quartz.threadPool.threadCount: 5
-
 
 
 server:
