@@ -46,8 +46,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     SecurityProperties securityProperties;
 
-
-
     InvalidatedTokenRepository invalidatedTokenRepository;
 
     @Override

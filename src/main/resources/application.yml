@@ -41,6 +41,21 @@ spring:
   profiles:
     active: ${PROFILE:123456}
 
+  quartz:
+    job-store-type: jdbc
+    scheduler-name: MainQuartzScheduler
+    wait-for-jobs-to-complete-on-shutdown: true
+    jdbc:
+      initialize-schema: never
+    properties:
+      org.quartz.scheduler.instanceId: AUTO
+      org.quartz.jobStore.driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+      org.quartz.jobStore.useProperties: false
+      org.quartz.jobStore.isClustered: false
+      org.quartz.jobStore.tablePrefix: sp.QRTZ_
+      org.quartz.threadPool.threadCount: 5
+
+
 
 server:
   port: ${PORT_APP:1711}
