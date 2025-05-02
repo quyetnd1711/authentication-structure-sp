@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.eren.authenticationstructuresp.common.constant.DateTimeConstant;
 import vn.eren.authenticationstructuresp.common.exception.AppException;
@@ -12,6 +13,9 @@ import vn.eren.authenticationstructuresp.common.util.ResponseUtil;
 import vn.eren.authenticationstructuresp.config.paging.PageableData;
 import vn.eren.authenticationstructuresp.config.paging.PagingRequest;
 import vn.eren.authenticationstructuresp.config.paging.PagingResponse;
+import vn.eren.authenticationstructuresp.config.properties.SecurityProperties;
+import vn.eren.authenticationstructuresp.dto.request.ChangePasswordRequest;
+import vn.eren.authenticationstructuresp.dto.request.ResetPasswordRequest;
 import vn.eren.authenticationstructuresp.dto.request.SearchUsersRequest;
 import vn.eren.authenticationstructuresp.dto.request.UsersRequest;
 import vn.eren.authenticationstructuresp.dto.response.UsersResponse;
@@ -20,6 +24,7 @@ import vn.eren.authenticationstructuresp.mapper.UsersMapper;
 import vn.eren.authenticationstructuresp.repository.UsersRepository;
 import vn.eren.authenticationstructuresp.service.UsersService;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -32,6 +37,10 @@ public class UsersServiceImpl implements UsersService {
     UsersMapper usersMapper;
 
     ResponseUtil responseUtil;
+
+    PasswordEncoder passwordEncoder;
+
+    SecurityProperties securityProperties;
 
     @Override
     public PagingResponse<UsersResponse> getListUser(SearchUsersRequest request) {
@@ -66,6 +75,7 @@ public class UsersServiceImpl implements UsersService {
             throw new AppException(ErrorCode.USER_EXISTED);
         }
         Users newUser = usersMapper.toEntity(request);
+        newUser.setPassword(passwordEncoder.encode(request.getPassword()));
         return usersMapper.toResponse(usersRepository.save(newUser));
     }
 
@@ -75,6 +85,7 @@ public class UsersServiceImpl implements UsersService {
                 () -> new AppException(ErrorCode.USER_NOT_EXISTED)
         );
         usersMapper.update(users, request);
+        users.setPassword(passwordEncoder.encode(request.getPassword()));
         return usersMapper.toResponse(usersRepository.save(users));
 
     }
@@ -87,6 +98,36 @@ public class UsersServiceImpl implements UsersService {
         usersRepository.deleteById(id);
         return usersMapper.toResponse(users);
     }
+
+    @Override
+    public boolean changePassword(ChangePasswordRequest request) {
+        Users users = usersRepository.findById(request.getUserId()).orElseThrow(
+                () -> new AppException(ErrorCode.USER_NOT_EXISTED)
+        );
+        if (!passwordEncoder.matches(request.getOldPassword(), users.getPassword())) {
+            throw new AppException(ErrorCode.PASSWORD_CURRENT_WRONG);
+        }
+        if (Objects.equals(request.getOldPassword(), request.getNewPassword())) {
+            throw new AppException(ErrorCode.PASSWORD_DUPLICATE);
+        }
+        if (!Objects.equals(request.getNewPassword(), request.getConfirmPassword())) {
+            throw new AppException(ErrorCode.PASSWORD_CONFIRM_WRONG);
+        }
+        users.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        usersRepository.save(users);
+        return true;
+    }
+
+    @Override
+    public boolean resetPassword(ResetPasswordRequest request) {
+        Users users = usersRepository.findByEmail(request.getEmail()).orElseThrow(
+                () -> new AppException(ErrorCode.USER_NOT_EXISTED)
+        );
+        users.setPassword(passwordEncoder.encode(securityProperties.getPasswordDefault()));
+        usersRepository.save(users);
+        return true;
+    }
+
 
     private UsersResponse convertToUsersResponse(Users user) {
         return responseUtil.convertToResponse(user, usersMapper::toResponse, DateTimeConstant.DD_MM_YYYY_HH_mm_ss);

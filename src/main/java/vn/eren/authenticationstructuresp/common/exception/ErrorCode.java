@@ -28,6 +28,9 @@ public enum ErrorCode{
     NOT_EXIST_ROLE(10009, "Role does not exist", HttpStatus.BAD_REQUEST),
     ROLE_EXISTED(10010, "Role already exists", HttpStatus.BAD_REQUEST),
     NOT_DELETE_ROLE_ADMIN(10011, "Do not delete role ADMIN", HttpStatus.BAD_REQUEST),
+    PASSWORD_CURRENT_WRONG(10012, "Current password does not match", HttpStatus.BAD_REQUEST),
+    PASSWORD_DUPLICATE(10013, "Duplicate password", HttpStatus.BAD_REQUEST),
+    PASSWORD_CONFIRM_WRONG(10014, "Confirm password does not match", HttpStatus.BAD_REQUEST),
     // FORBIDDEN - 403
     UNAUTHORIZED(10000, "Unauthorized", HttpStatus.UNAUTHORIZED),
     UNAUTHENTICATED(10001, "Unauthenticated", HttpStatus.UNAUTHORIZED),

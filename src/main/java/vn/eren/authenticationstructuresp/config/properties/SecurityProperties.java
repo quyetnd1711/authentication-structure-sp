@@ -25,4 +25,6 @@ public class SecurityProperties {
     Long expirationTokenTime;
 
     Long refreshTokenTime;
+
+    String passwordDefault;
 }

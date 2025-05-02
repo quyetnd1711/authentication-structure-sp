@@ -53,6 +53,7 @@ public class Users extends AbstractAuditingEntity<String> {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
+            schema = "sp",
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")

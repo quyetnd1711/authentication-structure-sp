@@ -9,14 +9,10 @@ import vn.eren.authenticationstructuresp.entities.Users;
 
 import java.util.Optional;
 
-import static vn.eren.authenticationstructuresp.common.constant.CacheConstant.USER_BY_ID_CACHE;
-import static vn.eren.authenticationstructuresp.common.constant.CacheConstant.USER_BY_USERNAME_CACHE;
-import static vn.eren.authenticationstructuresp.common.constant.CacheConstant.USER_NAME_BY_ID_CACHE;
+import static vn.eren.authenticationstructuresp.common.constant.CacheConstant.*;
 
 @Repository
 public interface UsersRepository extends JpaRepository<Users, String>, JpaSpecificationExecutor<Users> {
-
-
 
     @Cacheable(cacheNames = USER_BY_USERNAME_CACHE, unless = "#result == null")
     Optional<Users> findByUsername(String username);
@@ -28,4 +24,9 @@ public interface UsersRepository extends JpaRepository<Users, String>, JpaSpecif
     @Cacheable(cacheNames = USER_NAME_BY_ID_CACHE, unless = "#result == null")
     @Query(nativeQuery = true, value = "SELECT username FROM sp.users WHERE id = ?1 LIMIT 1")
     String findUsernameById(String id);
+
+    Optional<Users> findByEmail(String email);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM sp.users WHERE username = ?1 LIMIT 1")
+    Optional<Users> findByUsernameNoCache(String username);
 }

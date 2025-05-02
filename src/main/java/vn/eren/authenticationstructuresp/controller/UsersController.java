@@ -7,6 +7,8 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import vn.eren.authenticationstructuresp.config.paging.PagingResponse;
+import vn.eren.authenticationstructuresp.dto.request.ChangePasswordRequest;
+import vn.eren.authenticationstructuresp.dto.request.ResetPasswordRequest;
 import vn.eren.authenticationstructuresp.dto.request.SearchUsersRequest;
 import vn.eren.authenticationstructuresp.dto.request.UsersRequest;
 import vn.eren.authenticationstructuresp.dto.response.ApiResponse;
@@ -42,6 +44,7 @@ public class UsersController {
         return ApiResponse.<UsersResponse>builder()
                 .httpStatus(HttpStatus.OK.value())
                 .data(usersService.createUser(request))
+                .message("User created successfully")
                 .build();
     }
 
@@ -50,6 +53,7 @@ public class UsersController {
         return ApiResponse.<UsersResponse>builder()
                 .httpStatus(HttpStatus.OK.value())
                 .data(usersService.updateUser(request))
+                .message("User updated successfully")
                 .build();
     }
 
@@ -58,6 +62,25 @@ public class UsersController {
         return ApiResponse.<UsersResponse>builder()
                 .httpStatus(HttpStatus.OK.value())
                 .data(usersService.deleteUser(id))
+                .message("User deleted successfully")
+                .build();
+    }
+
+    @PostMapping("/change-password-users")
+    public ApiResponse<Boolean> changePasswordUsers(@RequestBody ChangePasswordRequest request) {
+        return ApiResponse.<Boolean>builder()
+                .httpStatus(HttpStatus.OK.value())
+                .data(usersService.changePassword(request))
+                .message("Password changed successfully")
+                .build();
+    }
+
+    @PostMapping("/reset-password-users")
+    public ApiResponse<Boolean> resetPasswordUsers(@RequestBody ResetPasswordRequest request) {
+        return ApiResponse.<Boolean>builder()
+                .httpStatus(HttpStatus.OK.value())
+                .data(usersService.resetPassword(request))
+                .message("Password reset successfully")
                 .build();
     }
 }

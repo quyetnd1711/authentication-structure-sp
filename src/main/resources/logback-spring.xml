@@ -10,6 +10,7 @@
 
     <property name="LOG_HOME" value="./logs"/>
     <property name="LOG_INFO" value="log_info"/>
+    <property name="LOG_DEBUG" value="log_debug"/>
     <property name="LOG_ERROR" value="log_error"/>
     <property name="DATE_FORMAT" value="%d{yyyy-MM-dd}"/>
     <property name="DATE_TIME_FORMAT" value="dd-MM-yyyy HH:mm:ss:SSS"/>
@@ -65,6 +66,23 @@
         </rollingPolicy>
     </appender>
 
+    <appender name="${LOG_DEBUG}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${LOG_DEBUG}.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <timestampPattern>${DATE_TIME_FORMAT}</timestampPattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/archived/${LOG_DEBUG}.${DATE_FORMAT}.%i.log.zip</fileNamePattern>
+            <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            <maxHistory>69</maxHistory>
+        </rollingPolicy>
+    </appender>
+
     <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
 
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
@@ -78,6 +96,7 @@
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="${LOG_INFO}"/>
         <appender-ref ref="${LOG_ERROR}"/>
+        <appender-ref ref="${LOG_DEBUG}"/>
     </root>
 
 </configuration>

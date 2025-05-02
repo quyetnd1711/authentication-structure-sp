@@ -1,6 +1,8 @@
 package vn.eren.authenticationstructuresp.service;
 
 import vn.eren.authenticationstructuresp.config.paging.PagingResponse;
+import vn.eren.authenticationstructuresp.dto.request.ChangePasswordRequest;
+import vn.eren.authenticationstructuresp.dto.request.ResetPasswordRequest;
 import vn.eren.authenticationstructuresp.dto.request.SearchUsersRequest;
 import vn.eren.authenticationstructuresp.dto.request.UsersRequest;
 import vn.eren.authenticationstructuresp.dto.response.UsersResponse;
@@ -16,4 +18,8 @@ public interface UsersService {
     UsersResponse updateUser(UsersRequest request);
 
     UsersResponse deleteUser(String id);
+
+    boolean changePassword(ChangePasswordRequest request);
+
+    boolean resetPassword(ResetPasswordRequest request);
 }
